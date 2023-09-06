@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome CSS-->
     <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/bed8df2ea4.js" crossorigin="anonymous"></script>
     <!-- Google fonts - Roboto -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700">
     <!-- owl carousel-->
@@ -40,7 +41,7 @@
             <div class="col-lg-6 text-center text-lg-right">
               <ul class="menu list-inline mb-0">
                 <li class="list-inline-item"><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
-                <li class="list-inline-item"><a href="register.html">Register</a></li>
+                <li class="list-inline-item"><a href="register.php">Register</a></li>
                 <li class="list-inline-item"><a href="contact.html">Contact</a></li>
                 <li class="list-inline-item"><a href="#">Recently viewed</a></li>
               </ul>

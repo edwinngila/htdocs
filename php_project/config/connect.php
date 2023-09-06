@@ -1,14 +1,14 @@
 <?php
-// !!database conection
-$db_host="localhost";
+$host="localhost";
 $db_name="phpecommers";
-$user_name="root";
-$db_password="";
-
+$user="root";
+$password="";
 try{
-$db=new PDO("mysql:host=$db_host;dbName=$$db_name",$user_name,$db_password);
-$db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+ $db=new PDO("mysql:host=$host;dbname=$db_name",$user,$password);
+ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+
 }
-catch(PDOException $e){
-    die("ERRPR:DB CONNECTION IS INVALID".$e->getMessage());
+catch(PDOException $E){
+    die("CONNECTION FAILED".$E->getMessage());
 }
+?>

@@ -1,192 +1,49 @@
 <?php 
+error_reporting(1);
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
+error_reporting(E_ALL);
 include("./config/connect.php");
-if ($_SERVER["REQUEST_METHOD"]===''){
- $first_name=$_POST['FirstName'];
- $password=$_POST['password'];
+if ($_SERVER["REQUEST_METHOD"]==='POST'){
+ $FirstName=$_POST['FirstName'];
+ $LastName=$_POST['LastName'];
+ $email=$_POST['email'];
+ $Phone=$_POST['Phone'];
+ $password=$_POST['Password'];
+ $ConfirmPassword=$_POST['ConfirmPassword'];
+ $user_type="buyer";
+ $is_verified=0;
+ $Invalid;
+
+ if($password!==$ConfirmPassword){
+    $Invalid='password entered is not valid';
+ }
+
  $hashedPassword=password_hash($password,PASSWORD_DEFAULT);
+
+ $query="insert into users (first_name,	last_name,email,phone_no,password,user_type,is_verified) values(:first_name,:last_name,:email,:phone_no,:password,:user_type,:is_verified)";
+ $stmt=$db->prepare($query);
+ $stmt->bindParam(":first_name",$FirstName);
+ $stmt->bindParam(":last_name",$LastName);
+ $stmt->bindParam(":email",$email);
+ $stmt->bindParam(":phone_no",$Phone);
+ $stmt->bindParam(":password",$hashedPassword);
+ $stmt->bindParam(":user_type",$user_type);
+ $stmt->bindParam(":is_verified",$is_verified);
+ try{
+  if($stmt->execute()){
+  header("location:index.php");
+  }
+  else{
+    echo "Error creating an employee";
+  }
+  }
+  catch(PDOException $E){
+    echo $E->getMessage();
+  }
 }
 ?>
 <?php include("./includes/navbar.php")?>
-      </div>
-      <nav class="navbar navbar-expand-lg">
-        <div class="container"><a href="index.html" class="navbar-brand home"><img src="img/logo.png" alt="Obaju logo" class="d-none d-md-inline-block"><img src="img/logo-small.png" alt="Obaju logo" class="d-inline-block d-md-none"><span class="sr-only">Obaju - go to homepage</span></a>
-          <div class="navbar-buttons">
-            <button type="button" data-toggle="collapse" data-target="#navigation" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
-            <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></button><a href="basket.html" class="btn btn-outline-secondary navbar-toggler"><i class="fa fa-shopping-cart"></i></a>
-          </div>
-          <div id="navigation" class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item"><a href="#" class="nav-link active">Home</a></li>
-              <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Men<b class="caret"></b></a>
-                <ul class="dropdown-menu megamenu">
-                  <li>
-                    <div class="row">
-                      <div class="col-md-6 col-lg-3">
-                        <h5>Clothing</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="category.html" class="nav-link">T-shirts</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Shirts</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Pants</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Accessories</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-6 col-lg-3">
-                        <h5>Shoes</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="category.html" class="nav-link">Trainers</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Sandals</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Hiking shoes</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Casual</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-6 col-lg-3">
-                        <h5>Accessories</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="category.html" class="nav-link">Trainers</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Sandals</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Hiking shoes</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Casual</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Hiking shoes</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Casual</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-6 col-lg-3">
-                        <h5>Featured</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="category.html" class="nav-link">Trainers</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Sandals</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Hiking shoes</a></li>
-                        </ul>
-                        <h5>Looks and trends</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="category.html" class="nav-link">Trainers</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Sandals</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Hiking shoes</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Ladies<b class="caret"></b></a>
-                <ul class="dropdown-menu megamenu">
-                  <li>
-                    <div class="row">
-                      <div class="col-md-6 col-lg-3">
-                        <h5>Clothing</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="category.html" class="nav-link">T-shirts</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Shirts</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Pants</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Accessories</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-6 col-lg-3">
-                        <h5>Shoes</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="category.html" class="nav-link">Trainers</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Sandals</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Hiking shoes</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Casual</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-6 col-lg-3">
-                        <h5>Accessories</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="category.html" class="nav-link">Trainers</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Sandals</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Hiking shoes</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Casual</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Hiking shoes</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Casual</a></li>
-                        </ul>
-                        <h5>Looks and trends</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="category.html" class="nav-link">Trainers</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Sandals</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Hiking shoes</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-6 col-lg-3">
-                        <div class="banner"><a href="#"><img src="img/banner.jpg" alt="" class="img img-fluid"></a></div>
-                        <div class="banner"><a href="#"><img src="img/banner2.jpg" alt="" class="img img-fluid"></a></div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Template<b class="caret"></b></a>
-                <ul class="dropdown-menu megamenu">
-                  <li>
-                    <div class="row">
-                      <div class="col-md-6 col-lg-3">
-                        <h5>Shop</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="index.html" class="nav-link">Homepage</a></li>
-                          <li class="nav-item"><a href="category.html" class="nav-link">Category - sidebar left</a></li>
-                          <li class="nav-item"><a href="category-right.html" class="nav-link">Category - sidebar right</a></li>
-                          <li class="nav-item"><a href="category-full.html" class="nav-link">Category - full width</a></li>
-                          <li class="nav-item"><a href="detail.html" class="nav-link">Product detail</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-6 col-lg-3">
-                        <h5>User</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="register.html" class="nav-link">Register / login</a></li>
-                          <li class="nav-item"><a href="customer-orders.html" class="nav-link">Orders history</a></li>
-                          <li class="nav-item"><a href="customer-order.html" class="nav-link">Order history detail</a></li>
-                          <li class="nav-item"><a href="customer-wishlist.html" class="nav-link">Wishlist</a></li>
-                          <li class="nav-item"><a href="customer-account.html" class="nav-link">Customer account / change password</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-6 col-lg-3">
-                        <h5>Order process</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="basket.html" class="nav-link">Shopping cart</a></li>
-                          <li class="nav-item"><a href="checkout1.html" class="nav-link">Checkout - step 1</a></li>
-                          <li class="nav-item"><a href="checkout2.html" class="nav-link">Checkout - step 2</a></li>
-                          <li class="nav-item"><a href="checkout3.html" class="nav-link">Checkout - step 3</a></li>
-                          <li class="nav-item"><a href="checkout4.html" class="nav-link">Checkout - step 4</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-6 col-lg-3">
-                        <h5>Pages and blog</h5>
-                        <ul class="list-unstyled mb-3">
-                          <li class="nav-item"><a href="blog.html" class="nav-link">Blog listing</a></li>
-                          <li class="nav-item"><a href="post.html" class="nav-link">Blog Post</a></li>
-                          <li class="nav-item"><a href="faq.html" class="nav-link">FAQ</a></li>
-                          <li class="nav-item"><a href="text.html" class="nav-link">Text page</a></li>
-                          <li class="nav-item"><a href="text-right.html" class="nav-link">Text page - right sidebar</a></li>
-                          <li class="nav-item"><a href="404.html" class="nav-link">404 page</a></li>
-                          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-            <div class="navbar-buttons d-flex justify-content-end">
-              <!-- /.nav-collapse-->
-              <div id="search-not-mobile" class="navbar-collapse collapse"></div><a data-toggle="collapse" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-block"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></a>
-              <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a href="basket.html" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span>3 items in cart</span></a></div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="search" class="collapse">
-        <div class="container">
-          <form role="search" class="ml-auto">
-            <div class="input-group">
-              <input type="text" placeholder="Search" class="form-control">
-              <div class="input-group-append">
-                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </header>
     <div id="all">
       <div id="content">
         <div class="container">
@@ -210,23 +67,34 @@ if ($_SERVER["REQUEST_METHOD"]===''){
                 <form action="" method="post">
                   <div class="form-group">
                     <label for="FirstName">First Name</label>
-                    <input id="name" type="text" class="form-control">
+                    <input id="name" name="FirstName" type="text" class="form-control">
                   </div>
                   <div class="form-group">
-                    <label for="SecondName">Last Name</label>
-                    <input id="name" type="text" class="form-control">
+                    <label for="LastName">Last Name</label>
+                    <input id="LastName" name="LastName" type="text" class="form-control">
                   </div>
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" type="text" class="form-control">
+                    <input id="email" name="email" type="text" class="form-control">
                   </div>
                   <div class="form-group">
-                    <label for="email">Phone</label>
-                    <input id="email" type="text" class="form-control">
+                    <label for="Phone">Phone</label>
+                    <input id="Phone" name="Phone" type="text" class="form-control">
                   </div>
                   <div class="form-group">
                     <label for="password">Password</label>
-                    <input id="password" type="password" class="form-control">
+                    <div class="input-group">
+                       <input type="password" name="Password" id="Password" class="form-control">
+                       <span style="cursor: pointer;" class="input-group-text" id="eye1" onclick="eyeToggle1()"><i class="fa-regular fa-eye-slash"></i></span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="ConfirmPassword">Confirm Password</label>
+                    <div class="input-group">
+                       <input type="password" name="ConfirmPassword" onchange="ConfirmPassword()" id="ConfirmPassword" class="form-control">
+                       <span style="cursor: pointer;" class="input-group-text" id="eye2" onclick="eyeToggle2()"><i class="fa-regular fa-eye-slash"></i></span>
+                    </div>
+                    <span id="feedBack"><?php echo $Invalid;?></span>
                   </div>
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-user-md"></i> Register</button>
@@ -247,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"]===''){
                   </div>
                   <div class="form-group">
                     <label for="password">Password</label>
-                    <input id="password" type="password" class="form-control">
+                    <input id="password3" type="password3" class="form-control">
                   </div>
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i> Log in</button>
@@ -259,4 +127,47 @@ if ($_SERVER["REQUEST_METHOD"]===''){
         </div>
       </div>
     </div>
+    <script>
+        function eyeToggle1(){
+           const getElement=document.getElementById("eye1");
+           const password1=document.getElementById("Password");
+           if(password1.type==="password"){
+            getElement.innerHTML="<i class='fa-regular fa-eye'></i>";
+            password1.type="text";
+           }
+           else{
+            getElement.innerHTML="<i class='fa-regular fa-eye-slash'></i>";
+            password1.type="password";
+           }
+           
+           console.log("class");
+        }
+        function eyeToggle2(){
+           const getElement=document.getElementById("eye2");
+           const password2=document.getElementById("ConfirmPassword");
+           if(password2.type==="password"){
+            getElement.innerHTML="<i class='fa-regular fa-eye'></i>";
+            password2.type="text";
+           }
+           else{
+            getElement.innerHTML="<i class='fa-regular fa-eye-slash'></i>";
+            password2.type="password";
+           }
+           
+           console.log("class");
+        }
+        function ConfirmPassword(){
+          const pass=document.getElementById('Password').value;
+          const pass2=document.getElementById('ConfirmPassword').value;
+          const text=document.getElementById("feedBack");
+          if(pass!==pass2){
+            text.style="color=red"
+            text.innerHTML="The two passwords don't match"
+          }
+          else{
+            text.style="color=green"
+            text.innerHTML="The passwords match"
+          }
+        }
+    </script>
  <?php include('./includes/footer.php')?>
