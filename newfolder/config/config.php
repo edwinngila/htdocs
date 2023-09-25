@@ -1,6 +1,6 @@
 <?php
 $host="localhost";
-$db_name="company";
+$db_name="school";
 $user="root";
 $password="";
 try{

@@ -1,0 +1,8 @@
+.items{
+    cursor: pointer;
+    border-radius: 15px;
+}
+.items:hover{
+    background-color: #329171;
+    border-radius: 15px;
+}

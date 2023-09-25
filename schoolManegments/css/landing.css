@@ -1,0 +1,10 @@
+  #imgCont{
+    border-radius: 50px;
+    overflow: hidden;
+    height:77vh;
+    overflow: hidden;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../IMG/istockphoto-1368068269-1024x1024-transformed.jpeg");
+  }
